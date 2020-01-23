@@ -11,14 +11,48 @@ const SearchContainer = (props) => {
     visible: false
   })
 
+  const [simpleSearchTerm, setSimpleSearchTerm] = useState('')
+  const [advancedSearchTerms, setAdvancedSearchTerms] = useState({
+    author: '',
+    title: '',
+    description: '',
+    categories: []
+  })
+
   useEffect(() => {
     bookService
       .getCategories()
       .then(response => setCategories(response))
   }, [])
 
-  const handleVisibility = () => {
+  const toggleAdvancedSearch = () => {
     setAdvancedSearch({ ...advancedSearch, visible: !advancedSearch.visible })
+  }
+
+  const handleSimpleChange = (event) => {
+    setSimpleSearchTerm(event.target.value)
+  }
+
+  const handleAuthorChange = (event) => {
+    setAdvancedSearchTerms({...advancedSearchTerms, author: event.target.value})
+  }
+
+  const handleTitleChange = (event) => {
+    setAdvancedSearchTerms({...advancedSearchTerms, title: event.target.value})
+  }
+
+  const handleDescriptionChange = (event) => {
+    setAdvancedSearchTerms({...advancedSearchTerms, description: event.target.value})
+  }
+
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    advancedSearch.visible ?
+      console.log(advancedSearchTerms) :
+      console.log(simpleSearchTerm)
+      bookService.simpleSearch(simpleSearchTerm)
+        .then(response => console.log(response))
   }
 
   return (
@@ -29,16 +63,18 @@ const SearchContainer = (props) => {
       }}
     >
       <h2>Search all books</h2>
-      <Form size='big' style={{maxWidth:500}}>
+      <Form size='big' style={{maxWidth:500}} onSubmit={(e) => handleSubmit(e)}>
         {advancedSearch.visible ? 
-        <Form.Field control='input' disabled /> :
+        <Form.Field control='input' disabled value={''}/> :
         <Form.Field
           control='input'
           placeholder='Search any attribute...'
+          value={simpleSearchTerm}
+          onChange={(e) => handleSimpleChange(e)}
         />
         }
         <p 
-          onClick={() => handleVisibility()}
+          onClick={() => toggleAdvancedSearch()}
           align='left' 
           style={{marginTop:-15}}
         >
@@ -53,14 +89,20 @@ const SearchContainer = (props) => {
               <Form.Field
                 label='Author'
                 control='input'
+                value={advancedSearchTerms.author}
+                onChange={(e) => handleAuthorChange(e)}
               />
               <Form.Field
                 label='Title'
                 control='input'
+                value={advancedSearchTerms.title}
+                onChange={(e) => handleTitleChange(e)}
               />
               <Form.Field
                 label='Description'
                 control='input'
+                value={advancedSearchTerms.description}
+                onChange={(e) => handleDescriptionChange(e)}
               />
               <Form.Field label='Categories' />
               {categories.map(c => 
