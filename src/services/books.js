@@ -17,4 +17,24 @@ const simpleSearch = async (searchTerm) => {
   return response.data
 }
 
-export default { getAll, getCategories, simpleSearch }
+const advancedSearch = async (searchTerms) => {
+  const params = []
+  if (searchTerms.author) params.push(`author=${searchTerms.author}`)
+  if (searchTerms.title) params.push(`title=${searchTerms.title}`)
+  if (searchTerms.description) params.push(`description=${searchTerms.description}`)
+  if (searchTerms.publisher) params.push(`publisher=${searchTerms.publisher}`)
+  if (searchTerms.year) params.push(`year=${searchTerms.year}`)
+
+  let paramStr = ''
+  params.forEach((param, indx, array) => {
+    paramStr += param
+    if (indx !== array.length-1) {
+      paramStr += '&'
+    }
+  })
+
+  const response = await axios.get(`${BASE_URL}/detailedsearch?${paramStr}`)
+  return response.data
+}
+
+export default { getAll, getCategories, simpleSearch, advancedSearch }

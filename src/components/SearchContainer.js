@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Form, Button } from 'semantic-ui-react'
 import SimpleSearch from './SimpleSearch'
 import AdvancedSearch from './AdvancedSearch'
-import { getAllBooks, getSimpleSearchBooks } from '../reducers/booksReducer'
+import { getAllBooks, getSimpleSearchBooks, getAdvancedSearchBooks } from '../reducers/booksReducer'
 import { toggleResultsLoading } from '../reducers/loadingReducer'
 import { 
   toggleAdvancedSearch,
@@ -34,6 +34,7 @@ const mapDispatch = {
   updateYear,
   getAllBooks,
   getSimpleSearchBooks,
+  getAdvancedSearchBooks,
   toggleResultsLoading
 }
 
@@ -43,7 +44,8 @@ const SearchContainer = (props) => {
     event.preventDefault()
     props.toggleResultsLoading()
     props.search.advanced ?
-      console.log('advanced search!') :
+      props.getAdvancedSearchBooks(props.search)
+        .then(() => props.toggleResultsLoading()) :
       props.getSimpleSearchBooks(props.search.simpleSearch)
         .then(() => props.toggleResultsLoading())
   }

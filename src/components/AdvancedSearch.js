@@ -1,14 +1,12 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
-import { Form, Transition, Checkbox } from 'semantic-ui-react'
-import { getCategories } from '../reducers/booksReducer'
+import { Form, Transition } from 'semantic-ui-react'
 import { 
   updateAuthor,
   updateTitle,
   updateDescription,
   updatePublisher,
-  updateYear,
-  updateCategories
+  updateYear
 } from '../reducers/searchReducer'
 
 const mapState = (state) => {
@@ -19,21 +17,14 @@ const mapState = (state) => {
 }
 
 const mapDispatch = {
-  getCategories,
   updateAuthor,
   updateTitle,
   updateDescription,
   updatePublisher,
   updateYear,
-  updateCategories
 }
 
 const AdvancedSearch = (props) => {
-
-  useEffect(() => {
-    props.getCategories()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   const authorChange = (event) => {
     props.updateAuthor(event.target.value)
@@ -53,10 +44,6 @@ const AdvancedSearch = (props) => {
 
   const yearChange = (event) => {
     props.updateYear(event.target.value)
-  }
-
-  const categoriesChange = (event) => {
-    props.updateCategories(event.target.value)
   }
 
   return (
@@ -93,13 +80,6 @@ const AdvancedSearch = (props) => {
             value={props.search.year}
             onChange={(e) => yearChange(e)}
           />
-          <Form.Field label='Categories' />
-          {props.categories.map(c =>
-            <Form.Field key={c.id}
-              label={c.name}
-              control={Checkbox}
-            />
-          )}
         </div>
       )}
     </Transition.Group>

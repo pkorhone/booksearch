@@ -55,6 +55,16 @@ export const getSimpleSearchBooks = (searchTerm) => {
   }
 }
 
+export const getAdvancedSearchBooks = (searchTerms) => {
+  return async dispatch => {
+    const books = await bookService.advancedSearch(searchTerms)
+    dispatch({
+      type: 'SET_BOOKS',
+      data: books
+    })
+  }
+}
+
 export const setSortColumn = (column) => {
   return dispatch => (
     dispatch({
