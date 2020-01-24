@@ -18,8 +18,8 @@ const booksReducer = (state = initialState, action) => {
       return {...state, filteredBooks: action.data}
     case 'SET_SORT_COLUMN':
       return {...state, sortColumn: action.data}
-    case 'TOGGLE_SORT_DIRECTION':
-      return {...state, sortDirection: state.sortDirection === 'ascending' ? 'descending' : 'ascending'}
+    case 'SET_SORT_DIRECTION':
+      return {...state, sortDirection: action.data}
     default:
       return state
   }
@@ -45,6 +45,15 @@ export const getAllBooks = () => {
   }
 }
 
+export const setSortedBooks = (books) => {
+  return dispatch => (
+    dispatch({
+      type: 'SET_BOOKS',
+      data: books
+    })
+  )
+}
+
 export const getSimpleSearchBooks = (searchTerm) => {
   return async dispatch => {
     const books = await bookService.simpleSearch(searchTerm)
@@ -64,11 +73,12 @@ export const setSortColumn = (column) => {
   )
 }
 
-export const toggleSortDirection = () => {
+export const setSortDirection = (direction) => {
   
   return dispatch => (
     dispatch({
-      type: 'TOGGLE_SORT_DIRECTION'
+      type: 'SET_SORT_DIRECTION',
+      data: direction
     })
   )
 }

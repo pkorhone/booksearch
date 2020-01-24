@@ -1,31 +1,37 @@
-import React, { useState, useEffect } from 'react'
-import { Table } from 'semantic-ui-react'
+import React from 'react'
+import { connect } from 'react-redux'
 import _ from 'lodash'
+import { setSortColumn, setSortDirection, setSortedBooks } from '../reducers/booksReducer'
+import { Table } from 'semantic-ui-react'
 
-const ResultsTable = ({ books }) => {
+const mapState = (state) => {
+  return {
+    tableData: state.books
+  }
+}
 
-  const [tableData, setTableData] = useState([])
-  const [column, setColumn] = useState(null)
-  const [direction, setDirection] = useState(null)
+const mapDispatch = {
+  setSortColumn,
+  setSortDirection,
+  setSortedBooks
+}
 
-  useEffect(() => {
-    setTableData(books)
-  }, [books])
+const ResultsTable = (props) => {
 
   const handleSort = (clickedColumn) => {
-    if (column !== clickedColumn) {     // Option 1: User wants to sort by a new column
-      setColumn(clickedColumn)
-      setTableData(_.sortBy(tableData, [clickedColumn]))
-      setDirection('ascending')
+    if (props.tableData.sortColumn !== clickedColumn) {     // Option 1: User wants to sort by a new column
+      props.setSortColumn(clickedColumn)
+      props.setSortedBooks(_.sortBy(props.tableData.books, [clickedColumn]))
+      props.setSortDirection('ascending')
       return    // sorting done
     }
 
     // Option 2: User wants to reverse sort direction of already sorted column
-    setTableData(tableData.reverse())
-    setDirection(direction === 'ascending' ? 'descending' : 'ascending')
+    props.setSortedBooks(props.tableData.books.reverse())
+    props.setSortDirection(props.tableData.sortDirection === 'ascending' ? 'descending' : 'ascending')
   }
 
-  if (tableData.length === 0) {
+  if (props.tableData.books.length === 0) {
     return (
       <>
       </>
@@ -37,19 +43,19 @@ const ResultsTable = ({ books }) => {
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell
-              sorted={column === 'author' ? direction : null}
+              sorted={props.sortColumn === 'author' ? props.sortDirection : null}
               onClick={() => handleSort('author')}
             >
               Author
             </Table.HeaderCell>
             <Table.HeaderCell
-              sorted={column === 'title' ? direction : null}
+              sorted={props.sortColumn === 'title' ? props.sortDirection : null}
               onClick={() => handleSort('title')}
             >
               Title
             </Table.HeaderCell>
             <Table.HeaderCell
-              sorted={column === 'description' ? direction : null}
+              sorted={props.sortColumn === 'description' ? props.sortDirection : null}
               onClick={() => handleSort('description')}
             >
               Description
@@ -60,7 +66,7 @@ const ResultsTable = ({ books }) => {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {tableData.map(book => 
+          {props.tableData.books.map(book => 
             <Table.Row key={book.id}>
               <Table.Cell>{book.author}</Table.Cell>
               <Table.Cell>{book.title}</Table.Cell>
@@ -73,4 +79,4 @@ const ResultsTable = ({ books }) => {
   )
 }
 
-export default ResultsTable
+export default connect(mapState, mapDispatch)(ResultsTable)
