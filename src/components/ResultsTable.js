@@ -39,35 +39,35 @@ const ResultsTable = (props) => {
   }
   
   return (
-    <Table sortable>
+    <Table sortable selectable>
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell
-              sorted={props.sortColumn === 'author' ? props.sortDirection : null}
+              sorted={props.tableData.sortColumn === 'author' ? props.tableData.sortDirection : null}
               onClick={() => handleSort('author')}
             >
               Author
             </Table.HeaderCell>
             <Table.HeaderCell
-              sorted={props.sortColumn === 'title' ? props.sortDirection : null}
+              sorted={props.tableData.sortColumn === 'title' ? props.tableData.sortDirection : null}
               onClick={() => handleSort('title')}
             >
               Title
             </Table.HeaderCell>
             <Table.HeaderCell
-              sorted={props.sortColumn === 'description' ? props.sortDirection : null}
+              sorted={props.tableData.sortColumn === 'description' ? props.tableData.sortDirection : null}
               onClick={() => handleSort('description')}
             >
               Description
             </Table.HeaderCell>
             <Table.HeaderCell
-              sorted={props.sortColumn === 'publishedYear' ? props.sortDirection : null}
+              sorted={props.tableData.sortColumn === 'publishedYear' ? props.tableData.sortDirection : null}
               onClick={() => handleSort('publishedYear')}
             >
               Published
             </Table.HeaderCell>
             <Table.HeaderCell
-              sorted={props.sortColumn === 'publisher' ? props.sortDirection : null}
+              sorted={props.tableData.sortColumn === 'publisher' ? props.tableData.sortDirection : null}
               onClick={() => handleSort('publisher')}
             >
               Publisher
