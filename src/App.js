@@ -3,7 +3,7 @@ import Navbar from './components/Navbar'
 import SearchContainer from './components/SearchContainer'
 import ResultsContainer from './components/ResultsContainer'
 
-const App = () => {
+const App = (props) => {
 
   return (
     <div>

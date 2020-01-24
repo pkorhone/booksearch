@@ -4,6 +4,7 @@ import { Form, Button } from 'semantic-ui-react'
 import SimpleSearch from './SimpleSearch'
 import AdvancedSearch from './AdvancedSearch'
 import { getAllBooks, getSimpleSearchBooks } from '../reducers/booksReducer'
+import { toggleResultsLoading } from '../reducers/loadingReducer'
 import { 
   toggleAdvancedSearch,
   updateSimpleSearch,
@@ -18,7 +19,8 @@ import {
 
 const mapState = (state) => {
   return {
-    search: state.search
+    search: state.search,
+    loading: state.loading
   }
 }
 
@@ -31,16 +33,25 @@ const mapDispatch = {
   updatePublisher,
   updateYear,
   getAllBooks,
-  getSimpleSearchBooks
+  getSimpleSearchBooks,
+  toggleResultsLoading
 }
 
 const SearchContainer = (props) => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
+    props.toggleResultsLoading()
     props.search.advanced ?
       console.log('advanced search!') :
       props.getSimpleSearchBooks(props.search.simpleSearch)
+        .then(() => props.toggleResultsLoading())
+  }
+
+  const handleListAll = () => {
+    props.toggleResultsLoading()
+    props.getAllBooks()
+      .then(() => props.toggleResultsLoading())
   }
 
   return (
@@ -57,7 +68,7 @@ const SearchContainer = (props) => {
         <Button type='submit' color='blue'>Search</Button>
       </Form>
       <h4>Or:</h4>
-      <Button onClick={() => props.getAllBooks()}>List all books</Button>
+      <Button onClick={() => handleListAll()}>List all books</Button>
     </div>
   )
 }
