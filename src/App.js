@@ -4,6 +4,7 @@ import SearchContainer from './components/SearchContainer'
 import ResultsContainer from './components/ResultsContainer'
 
 const App = () => {
+
   return (
     <div>
       <Navbar />

@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import { Form, Button } from 'semantic-ui-react'
-import bookService from '../services/books'
+import SimpleSearch from './SimpleSearch'
 import AdvancedSearch from './AdvancedSearch'
+import { getAllBooks, getSimpleSearchBooks } from '../reducers/booksReducer'
 import { 
   toggleAdvancedSearch,
   updateSimpleSearch,
@@ -12,7 +13,7 @@ import {
   updatePublisher,
   updateYear
 } from '../reducers/searchReducer'
-import SimpleSearch from './SimpleSearch'
+
 
 
 const mapState = (state) => {
@@ -28,33 +29,18 @@ const mapDispatch = {
   updateTitle,
   updateDescription,
   updatePublisher,
-  updateYear
+  updateYear,
+  getAllBooks,
+  getSimpleSearchBooks
 }
 
 const SearchContainer = (props) => {
 
-  /*
-  const [categories, setCategories] = useState([])
-
-  useEffect(() => {
-    bookService
-      .getCategories()
-      .then(response => setCategories(response))
-  }, [])
-  */
-
   const handleSubmit = (event) => {
     event.preventDefault()
     props.search.advanced ?
-      console.log(props.search) :
-      console.log(props.search.simpleSearch)
-    /*
-    advancedSearch.visible ?
-      console.log(advancedSearchTerms) :
-      console.log(simpleSearchTerm)
-      bookService.simpleSearch(simpleSearchTerm)
-        .then(response => console.log(response))
-    */
+      console.log('advanced search!') :
+      props.getSimpleSearchBooks(props.search.simpleSearch)
   }
 
   return (
@@ -71,7 +57,7 @@ const SearchContainer = (props) => {
         <Button type='submit' color='blue'>Search</Button>
       </Form>
       <h4>Or:</h4>
-      <Button>List all books</Button>
+      <Button onClick={() => props.getAllBooks()}>List all books</Button>
     </div>
   )
 }

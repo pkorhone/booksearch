@@ -5,7 +5,8 @@ const initialState = {
   title: '',
   description: '',
   publisher: '',
-  year: ''
+  year: '',
+  categories: []
 }
 
 const searchReducer = (state = initialState, action) => {
@@ -24,6 +25,8 @@ const searchReducer = (state = initialState, action) => {
       return {...state, publisher: action.data}
     case 'UPDATE_YEAR':
       return {...state, year: action.data}
+    case 'UPDATE_CATEGORIES':
+      return {...state, categories: action.data}
     default:
       return state
   }
@@ -89,6 +92,15 @@ export const updateYear = (data) => {
       data: data
     })
   )
+}
+
+export const updateCategories = (data) => {
+  return dispatch => {
+    dispatch({
+      type: 'UPDATE_CATEGORIES',
+      data: data
+    })
+  }
 }
 
 export default searchReducer

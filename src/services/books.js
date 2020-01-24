@@ -16,6 +16,8 @@ const getCategories = async () => {
 
 const simpleSearch = async (searchTerm) => {
   const response = await axios.get(`${BASE_URL}/search?term=${searchTerm}`)
+  console.log('simple search')
+  console.log(`${BASE_URL}/search?term=${searchTerm}`)
   console.log(response.data)
   return response.data
 }

@@ -1,27 +1,27 @@
-import React, { useState, useEffect } from 'react'
-import bookService from '../services/books'
+import React from 'react'
+import { connect } from 'react-redux'
+import ResultsSummary from './ResultsSummary'
 import ResultsTable from './ResultsTable'
 
+const mapState = (state) => {
+  return {
+    data: state.books
+  }
+}
+
 const ResultsContainer = (props) => {
-
-  const [books, setBooks] = useState([])
-
-  useEffect(() => {
-    bookService
-      .getAll()
-      .then(response => setBooks(response))
-    
-  }, [])
 
   return (
     <div align='center'
       style={{
-        padding: 40
+        padding: 40,
+        borderTop: '0.25px solid'
       }}
     >
-      <ResultsTable books={books}/>
+      <ResultsSummary />
+      <ResultsTable books={props.data.books}/>
     </div>
   )
 }
 
-export default ResultsContainer
+export default connect(mapState, null)(ResultsContainer)
