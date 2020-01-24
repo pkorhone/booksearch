@@ -2,7 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import _ from 'lodash'
 import { setSortColumn, setSortDirection, setSortedBooks } from '../reducers/booksReducer'
-import { Table } from 'semantic-ui-react'
+import { Table, Popup } from 'semantic-ui-react'
+import BookPopup from './BookPopup'
 
 const mapState = (state) => {
   return {
@@ -79,18 +80,27 @@ const ResultsTable = (props) => {
         </Table.Header>
         <Table.Body>
           {props.tableData.books.map(book => 
-            <Table.Row key={book.id}>
-              <Table.Cell>{book.author}</Table.Cell>
-              <Table.Cell>{book.title}</Table.Cell>
-              <Table.Cell>
-                {book.description.length > 255 ? 
-                `${book.description.substring(0,255)} ...` :
-                book.description}
-              </Table.Cell>
-              <Table.Cell>{book.publishedYear}</Table.Cell>
-              <Table.Cell>{book.publisher}</Table.Cell>
-              <Table.Cell>{book.categories}</Table.Cell>
-            </Table.Row>
+            <Popup 
+              flowing 
+              hoverable
+              position='top center'
+              content={<BookPopup book={book} />} 
+              trigger={
+                <Table.Row key={book.id}>
+                  <Table.Cell>{book.author}</Table.Cell>
+                  <Table.Cell>{book.title}</Table.Cell>
+                  <Table.Cell>
+                    {book.description.length > 255 ? 
+                    `${book.description.substring(0,255)} ...` :
+                    book.description}
+                  </Table.Cell>
+                  <Table.Cell>{book.publishedYear}</Table.Cell>
+                  <Table.Cell>{book.publisher}</Table.Cell>
+                  <Table.Cell>{book.categories}</Table.Cell>
+                </Table.Row>
+              }
+            />
+            
           )}
         </Table.Body>
       </Table>
