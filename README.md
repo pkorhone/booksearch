@@ -1,5 +1,7 @@
 # Book Search Front End (React App)
 
+## Check out the [live demo!](https://agile-anchorage-78460.herokuapp.com/)
+
 This project was created as a front end for the [Book Search Back End](https://github.com/pkorhone/books-api-springboot). Please see the back end documentation for expected server endpoints.
 
 ## Setup:
@@ -19,3 +21,5 @@ You can then run the application by running:
 ```
 npm start
 ```
+
+On default, the app will run at `http://localhost:3000/`
