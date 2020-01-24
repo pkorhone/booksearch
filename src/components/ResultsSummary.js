@@ -1,18 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Button } from 'semantic-ui-react'
-import { toggleFilter } from '../reducers/booksReducer'
-import Filter from './Filter'
 
 const mapState = (state) => {
   return {
-    search: state.search,
     data: state.books
   }
-}
-
-const mapDispatch = {
-  toggleFilter
 }
 
 const ResultsSummary = (props) => {
@@ -25,18 +17,10 @@ const ResultsSummary = (props) => {
 
   return (
     <div align='left'>
-      <h3>
-        {`${resultsCount} results `}
-        <Button 
-          content='Filter' 
-          icon={props.data.filterActive ? 'close' : 'filter' }
-          onClick={() => props.toggleFilter()}
-        />
-      </h3>
-      <Filter />
-      
+      <h3>{`${resultsCount} results `}</h3>
+      <small>(Click column name to sort)</small>
     </div>
   )
 }
 
-export default connect(mapState, mapDispatch)(ResultsSummary)
+export default connect(mapState, null)(ResultsSummary)
