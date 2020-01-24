@@ -80,13 +80,13 @@ const ResultsTable = (props) => {
         </Table.Header>
         <Table.Body>
           {props.tableData.books.map(book => 
-            <Popup 
+            <Popup key={book.id}
               flowing 
               hoverable
               position='top center'
               content={<BookPopup book={book} />} 
               trigger={
-                <Table.Row key={book.id}>
+                <Table.Row>
                   <Table.Cell>{book.author}</Table.Cell>
                   <Table.Cell>{book.title}</Table.Cell>
                   <Table.Cell>

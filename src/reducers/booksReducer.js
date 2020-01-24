@@ -3,6 +3,7 @@ import bookService from '../services/books'
 const initialState = {
   categories: [],
   books: [],
+  filterActive: false,
   filteredBooks: [],
   sortColumn: null,
   sortDirection: null
@@ -14,6 +15,8 @@ const booksReducer = (state = initialState, action) => {
       return {...state, categories: action.data}
     case 'SET_BOOKS':
       return {...state, books: action.data, filteredBooks: action.data}
+    case 'TOGGLE_FILTER':
+      return {...state, filterActive: !state.filterActive}
     case 'SET_FILTERED_BOOKS':
       return {...state, filteredBooks: action.data}
     case 'SET_SORT_COLUMN':
@@ -74,13 +77,20 @@ export const setSortColumn = (column) => {
 }
 
 export const setSortDirection = (direction) => {
-  
   return dispatch => (
     dispatch({
       type: 'SET_SORT_DIRECTION',
       data: direction
     })
   )
+}
+
+export const toggleFilter = () => {
+  return dispatch => {
+    dispatch({
+      type: 'TOGGLE_FILTER'
+    })
+  }
 }
 
 export default booksReducer
