@@ -60,6 +60,18 @@ const ResultsTable = (props) => {
             >
               Description
             </Table.HeaderCell>
+            <Table.HeaderCell
+              sorted={props.sortColumn === 'publishedYear' ? props.sortDirection : null}
+              onClick={() => handleSort('publishedYear')}
+            >
+              Published
+            </Table.HeaderCell>
+            <Table.HeaderCell
+              sorted={props.sortColumn === 'publisher' ? props.sortDirection : null}
+              onClick={() => handleSort('publisher')}
+            >
+              Publisher
+            </Table.HeaderCell>
             <Table.HeaderCell>
               Categories
             </Table.HeaderCell>
@@ -70,7 +82,13 @@ const ResultsTable = (props) => {
             <Table.Row key={book.id}>
               <Table.Cell>{book.author}</Table.Cell>
               <Table.Cell>{book.title}</Table.Cell>
-              <Table.Cell>{book.description}</Table.Cell>
+              <Table.Cell>
+                {book.description.length > 255 ? 
+                `${book.description.substring(0,255)} ...` :
+                book.description}
+              </Table.Cell>
+              <Table.Cell>{book.publishedYear}</Table.Cell>
+              <Table.Cell>{book.publisher}</Table.Cell>
               <Table.Cell>{book.categories}</Table.Cell>
             </Table.Row>
           )}
