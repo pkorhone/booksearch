@@ -1,7 +1,5 @@
 # Book Search Front End (React App)
 
-## Check out the [live demo!](https://agile-anchorage-78460.herokuapp.com/)
-
 This project was created as a front end for the [Book Search Back End](https://github.com/pkorhone/books-api-springboot). Please see the back end documentation for expected server endpoints.
 
 ## Setup:
